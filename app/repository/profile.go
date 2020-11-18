@@ -32,11 +32,11 @@ func (ProfileRepository) Update(editProfile *models.Profile) error {
 	return nil
 }
 
-func (ProfileRepository) Delete(userId int64) error {
+func (ProfileRepository) Delete(id int64) error {
 	db := DBCon()
 	defer db.Close()
 	profile := models.Profile{}
-	if err := db.Order("id desc").Where("user_id = ?", userId).First(&profile).Error; err != nil{
+	if err := db.Order("id desc").Where("id = ?", id).First(&profile).Error; err != nil{
 		return err
 	}
 	db.Delete(&profile)
@@ -54,7 +54,7 @@ func (ProfileRepository) GetAll() ([]models.Profile, error){
 	var arr []models.Profile
 	for rows.Next() {
 		profile := models.Profile{}
-		rows.Scan(&profile)
+		db.ScanRows(rows, &profile)
 		arr = append(arr, profile)
 	}
 	return arr, nil
