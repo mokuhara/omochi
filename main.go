@@ -1,12 +1,12 @@
 package main
 
 import (
-	"omochi/app/models"
+	"omochi/app/repository"
 	"omochi/config"
 	"omochi/utils"
 )
 
 func main(){
 	utils.LoggingSettings(config.Config.LogFile)
-	models.DBCon()
+	repository.DBCon()
 }
