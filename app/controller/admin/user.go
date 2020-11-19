@@ -7,6 +7,7 @@ import (
 	"net/http"
 	"omochi/app/models"
 	"omochi/app/repository"
+	"omochi/middleware"
 	"strconv"
 )
 
@@ -92,4 +93,18 @@ func CreateUser(c *gin.Context) {
 		"status": http.StatusOK,
 		"data": user,
 	})
+}
+
+func Router(group *gin.RouterGroup){
+	adminEngine := group.Group("/admin")
+	adminEngine.Use(middleware.IsAdmin())
+	{
+		userEngine := adminEngine.Group("/user")
+		{
+			userEngine.GET("/index", GetUsers)
+			userEngine.PUT("/update", UpdateUser)
+			userEngine.DELETE("/delete", DeleteUser)
+			userEngine.POST("/create", CreateUser)
+		}
+	}
 }

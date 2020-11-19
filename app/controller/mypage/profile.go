@@ -6,6 +6,7 @@ import (
 	"net/http"
 	"omochi/app/models"
 	"omochi/app/repository"
+	"omochi/middleware"
 	"strconv"
 )
 
@@ -102,4 +103,18 @@ func DeleteProfile(c *gin.Context) {
 		"status": http.StatusOK,
 		"data": "",
 	})
+}
+
+func Router(group *gin.RouterGroup){
+	myPageEngine := group.Group("/mypage/:id")
+	myPageEngine.Use(middleware.IsLogin())
+	{
+		UserProfileEngine := myPageEngine.Group("/user")
+		{
+			UserProfileEngine.GET("/", GetProfile)
+			UserProfileEngine.POST("/create", CreateProfile)
+			UserProfileEngine.PUT("/update", UpdateProfile)
+			UserProfileEngine.DELETE("/delete", DeleteProfile)
+		}
+	}
 }

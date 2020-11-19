@@ -1,4 +1,4 @@
-package controller
+package specialist
 
 import (
 	"github.com/gin-gonic/gin"
@@ -19,4 +19,11 @@ func GetAllProfile(c *gin.Context){
 		"status": http.StatusOK,
 		"data": profiles,
 	})
+}
+
+func Router(group *gin.RouterGroup){
+	specialistEngine := group.Group("/specialist")
+	{
+		specialistEngine.GET("/", GetAllProfile)
+	}
 }
