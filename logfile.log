@@ -13,3 +13,6 @@
 2020/11/19 10:41:55 auth.go:80: failed to get user by email
 2020/11/19 10:41:55 auth.go:63: failed to create token
 2020/11/19 10:41:55 error.go:15: record not found
+2020/11/19 17:19:23 auth.go:80: action=createToken failed to get user by email
+2020/11/19 17:19:23 auth.go:63: action=Login failed to create token
+2020/11/19 17:19:23 error.go:15: record not found

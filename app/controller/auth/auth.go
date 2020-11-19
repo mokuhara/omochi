@@ -98,3 +98,11 @@ func createToken(user *models.User, c *gin.Context) (string, error){
 	}
 	return token, nil
 }
+
+func Router(group *gin.RouterGroup){
+	authEngine := group.Group("/auth")
+	{
+		authEngine.POST("/signup", Signup)
+		authEngine.POST("/login", Login)
+	}
+}
