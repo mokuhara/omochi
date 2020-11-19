@@ -16,3 +16,36 @@
 2020/11/19 17:19:23 auth.go:80: action=createToken failed to get user by email
 2020/11/19 17:19:23 auth.go:63: action=Login failed to create token
 2020/11/19 17:19:23 error.go:15: record not found
+2020/11/19 18:13:52 auth.go:33: action=Signup failed to create user
+2020/11/19 18:13:52 error.go:15: UNIQUE constraint failed: users.email
+2020/11/19 18:48:56 auth.go:53: action=Verify err=Token is expired
+2020/11/19 18:48:56 auth.go:18: invalid token
+2020/11/19 18:49:18 auth.go:53: action=Verify err=Token is expired
+2020/11/19 18:49:18 auth.go:18: invalid token
+2020/11/19 18:49:34 auth.go:53: action=Verify err=Token is expired
+2020/11/19 18:49:34 auth.go:18: invalid token
+2020/11/19 18:51:46 auth.go:54: action=Verify err=Token is expired
+2020/11/19 18:51:46 auth.go:18: invalid token
+2020/11/19 18:53:39 auth.go:22: 1
+2020/11/19 18:53:39 auth.go:23: 1
+2020/11/19 18:54:11 auth.go:22: 1
+2020/11/19 18:54:11 auth.go:23: 1
+2020/11/19 18:54:45 auth.go:22: 1
+2020/11/19 18:54:45 auth.go:23: 1
+2020/11/19 18:55:41 auth.go:22: 1
+2020/11/19 18:55:41 auth.go:23: 1
+2020/11/19 18:56:08 specialists.go:14: action=GetAllProfile failed to get profiles
+2020/11/19 18:56:08 error.go:15: no such table: profile
+2020/11/19 18:59:18 specialists.go:14: action=GetAllProfile failed to get profiles
+2020/11/19 18:59:18 error.go:15: no such column: email
+2020/11/19 19:00:17 specialists.go:14: action=GetAllProfile failed to get profiles
+2020/11/19 19:00:17 error.go:15: no such column: UserID
+2020/11/19 19:06:26 error.go:15: invalid userId
+2020/11/19 19:06:43 auth.go:54: action=Verify err=illegal base64 data at input byte 37
+2020/11/19 19:06:43 auth.go:34: invalid token
+2020/11/19 19:06:51 auth.go:54: action=Verify err=invalid character 'i' looking for beginning of value
+2020/11/19 19:06:51 auth.go:34: invalid token
+2020/11/19 19:10:09 auth.go:54: action=Verify err=invalid character 'ß' looking for beginning of value
+2020/11/19 19:10:09 auth.go:41: invalid token
+2020/11/19 19:10:27 auth.go:54: action=Verify err=invalid character 'i' looking for beginning of value
+2020/11/19 19:10:27 auth.go:41: invalid token

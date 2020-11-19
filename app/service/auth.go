@@ -39,6 +39,7 @@ func (TokenService) Generate(user *models.User, now time.Time) (string, error){
 }
 
 func (TokenService) Verify(c *gin.Context) (*Auth, error){
+	//Todo Authorizationが空白だとpanicが発生する
 	authHeader := c.Request.Header["Authorization"][0]
 	bearerToken := strings.Split(authHeader, " ")
 	if len(bearerToken) == 2{

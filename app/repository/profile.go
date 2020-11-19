@@ -43,17 +43,26 @@ func (ProfileRepository) Delete(id int64) error {
 	return nil
 }
 
-func (ProfileRepository) GetAll() ([]models.Profile, error){
+type Profile struct {
+	ID          int64  `json:"id"`
+	UserID      int64  `json:"userId"`
+	Name        string `json:"name"`
+	Description string `json:"description"`
+	Icon        string `json:"icon"`
+}
+
+func (ProfileRepository) GetAll() ([]Profile, error){
 	db := DBCon()
 	defer DBCon()
-	rows, err := db.Raw("SELECT * FROM (SELECT *, rank() over(partition by user_id order by id desc) AS rank FROM profile LIMIT 100 ) AS a WHERE rank = 1").Rows()
+	rows, err := db.Raw("SELECT * FROM (SELECT *, rank() over(partition by user_id order by id desc) AS rank FROM profiles) AS a WHERE rank = 1").Rows()
 	if err != nil {
 		return nil, err
 	}
 	defer rows.Close()
-	var arr []models.Profile
+	var arr []Profile
 	for rows.Next() {
-		profile := models.Profile{}
+
+		profile := Profile{}
 		db.ScanRows(rows, &profile)
 		arr = append(arr, profile)
 	}

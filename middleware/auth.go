@@ -1,9 +1,9 @@
 package middleware
 
 import (
-	"fmt"
 	"github.com/gin-gonic/gin"
 	"log"
+	"net/http"
 	"omochi/app/service"
 	"strconv"
 )
@@ -15,11 +15,17 @@ func IsLogin() gin.HandlerFunc{
 		res, err := tokenService.Verify(c)
 		if err != nil {
 			log.Println("invalid token")
-			c.Error(err).SetType(gin.ErrorTypePublic)
+			c.JSON(http.StatusUnauthorized, gin.H{
+				"status": http.StatusUnauthorized,
+				"data": err.Error(),
+			})
 			c.Abort()
 		}
 		if res.UserId != paramUserId {
-			c.Error(fmt.Errorf("invalid userId")).SetType(gin.ErrorTypePublic)
+			c.JSON(http.StatusUnauthorized, gin.H{
+				"status": http.StatusUnauthorized,
+				"data": err.Error(),
+			})
 			c.Abort()
 		}
 	}
@@ -31,11 +37,17 @@ func IsAdmin() gin.HandlerFunc{
 		res, err := tokenService.Verify(c)
 		if err != nil {
 			log.Println("invalid token")
-			c.Error(err).SetType(gin.ErrorTypePublic)
+			c.JSON(http.StatusUnauthorized, gin.H{
+				"status": http.StatusUnauthorized,
+				"data": err.Error(),
+			})
 			c.Abort()
 		}
 		if res.UserType != 0 {
-			c.Error(fmt.Errorf("insufficient authority")).SetType(gin.ErrorTypePublic)
+			c.JSON(http.StatusUnauthorized, gin.H{
+				"status": http.StatusUnauthorized,
+				"data": err.Error(),
+			})
 			c.Abort()
 		}
 
