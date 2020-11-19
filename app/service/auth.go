@@ -80,11 +80,11 @@ func (TokenService) Verify(c *gin.Context) (*Auth, error){
 				Iat: int64(iat),
 			}, nil
 		} else {
-			log.Println("failed token valid")
-			return nil, fmt.Errorf("failed token valid")
+			log.Println("action=Verify failed to token valid")
+			return nil, fmt.Errorf("failed to token valid")
 		}
 	} else {
-		log.Println("invalid token")
+		log.Println("action=Verify invalid token")
 		return nil, fmt.Errorf("invalid token")
 	}
 }

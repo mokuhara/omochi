@@ -15,14 +15,14 @@ func Signup(c *gin.Context){
 	user := models.User{}
 	err := c.BindJSON(&user)
 	if err != nil {
-		log.Println("bind error")
+		log.Println("action=Signup bind error")
 		c.Error(err).SetType(gin.ErrorTypePublic).SetMeta(http.StatusBadRequest)
 		return
 	}
 	purePassword := user.Password
 	hash, err := bcrypt.GenerateFromPassword([]byte(user.Password), 10)
 	if err != nil {
-		log.Println("failed to create password hash")
+		log.Println("action=Signup failed to create password hash")
 		c.Error(err).SetType(gin.ErrorTypePublic).SetMeta(http.StatusInternalServerError)
 		return
 	}
@@ -30,7 +30,7 @@ func Signup(c *gin.Context){
 	userRepository := repository.UserRepository{}
 	err = userRepository.Create(&user)
 	if err != nil {
-		log.Println("failed to create user")
+		log.Println("action=Signup failed to create user")
 		c.Error(err).SetType(gin.ErrorTypePublic).SetMeta(http.StatusInternalServerError)
 		return
 	}
@@ -38,7 +38,7 @@ func Signup(c *gin.Context){
 	user.Password = purePassword
 	token, err :=  createToken(&user, c)
 	if err != nil {
-		log.Println("failed to create token")
+		log.Println("action=Signup failed to create token")
 		c.Error(err).SetType(gin.ErrorTypePublic).SetMeta(http.StatusInternalServerError)
 		return
 	}
@@ -54,13 +54,13 @@ func Login(c *gin.Context){
 	user := models.User{}
 	err := c.BindJSON(&user)
 	if err != nil {
-		log.Println("bind error")
+		log.Println("action=Login bind error")
 		c.Error(err).SetType(gin.ErrorTypePublic).SetMeta(http.StatusBadRequest)
 		return
 	}
 	token, err := createToken(&user, c)
 	if err != nil {
-		log.Println("failed to create token")
+		log.Println("action=Login failed to create token")
 		c.Error(err).SetType(gin.ErrorTypePublic).SetMeta(http.StatusInternalServerError)
 		return
 	}
@@ -77,14 +77,14 @@ func createToken(user *models.User, c *gin.Context) (string, error){
 	userRepository := repository.UserRepository{}
 	matchUser, err := userRepository.GetByEmail(user.Email)
 	if err != nil {
-		log.Println("failed to get user by email")
+		log.Println("action=createToken failed to get user by email")
 		c.Error(err).SetType(gin.ErrorTypePublic).SetMeta(http.StatusInternalServerError)
 		return "", err
 	}
 
 	err = bcrypt.CompareHashAndPassword([]byte(matchUser.Password), []byte(user.Password))
 	if err != nil {
-		log.Println("invalid password")
+		log.Println("action=createToken invalid password")
 		c.Error(err).SetType(gin.ErrorTypePublic).SetMeta(http.StatusBadRequest)
 		return "", err
 	}
@@ -92,7 +92,7 @@ func createToken(user *models.User, c *gin.Context) (string, error){
 	tokenService := service.TokenService{}
 	token, err := tokenService.Generate(matchUser, time.Now())
 	if err != nil {
-		log.Println("failed create token")
+		log.Println("action=createToken failed create token")
 		c.Error(err).SetType(gin.ErrorTypePublic).SetMeta(http.StatusInternalServerError)
 		return "", err
 	}
