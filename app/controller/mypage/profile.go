@@ -76,7 +76,6 @@ func UpdateProfile(c *gin.Context){
 		"status": http.StatusOK,
 		"data": "",
 	})
-
 }
 
 func DeleteProfile(c *gin.Context) {
