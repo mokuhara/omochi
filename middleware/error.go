@@ -14,8 +14,10 @@ func ErrorMiddleware() gin.HandlerFunc {
 		if err != nil {
 			log.Print(err.Err)
 
+			data := map[string]string{"error": err.Error()}
 			c.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{
-				"Error": err.Error(),
+				"status": err.Meta,
+				"data": data,
 			})
 		}
 	}
