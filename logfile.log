@@ -1,0 +1,3 @@
+2020/11/19 09:53:19 auth.go:80: failed to get user by email
+2020/11/19 09:53:19 auth.go:63: failed to create token
+2020/11/19 09:53:19 error.go:15: record not found

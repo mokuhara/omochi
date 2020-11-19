@@ -66,10 +66,10 @@
     <integration-enabled>true</integration-enabled>
   </component>
   <component name="WindowStateProjectService">
-    <state x="360" y="233" width="1071" height="716" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1605660954295">
+    <state x="360" y="233" width="1071" height="716" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1605747085346">
       <screen x="0" y="23" width="1792" height="1097" />
     </state>
-    <state x="360" y="233" width="1071" height="716" key="#com.intellij.execution.impl.EditConfigurationsDialog/1792.23.1116.733/0.23.1792.1097@0.23.1792.1097" timestamp="1605660954295" />
+    <state x="360" y="233" width="1071" height="716" key="#com.intellij.execution.impl.EditConfigurationsDialog/1792.23.1116.733/0.23.1792.1097@0.23.1792.1097" timestamp="1605747085346" />
     <state width="243" height="457" key="HiddenNamespacesPopup" timestamp="1605660963256">
       <screen x="0" y="23" width="1792" height="1097" />
     </state>
