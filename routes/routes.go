@@ -2,6 +2,7 @@ package routes
 
 import (
 	"fmt"
+	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 	"omochi/app/controller"
 	"omochi/app/controller/admin"
@@ -15,6 +16,20 @@ import (
 func Router(){
 	engine := gin.Default()
 	engine.Use(middleware.ErrorMiddleware())
+	engine.Use(cors.New(cors.Config{
+		AllowHeaders: []string{
+			"Access-Control-Allow-Headers",
+			"Content-Type",
+			"Content-Length",
+			"Accept-Encoding",
+			"X-CSRF-Token",
+			"Authorization",
+		},
+		//TODO AllowOriginsがザルなので絞る
+		AllowOrigins: []string{
+			"*",
+		},
+	}))
 	APIEngine := engine.Group("/v1")
 	APIEngine.GET("/health", controller.Health)
 	{

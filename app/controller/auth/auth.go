@@ -1,6 +1,7 @@
 package auth
 
 import (
+	"fmt"
 	"github.com/gin-gonic/gin"
 	"golang.org/x/crypto/bcrypt"
 	"log"
@@ -36,14 +37,14 @@ func Signup(c *gin.Context){
 	}
 	//passwordをhash化前に戻す
 	user.Password = purePassword
-	token, err :=  createToken(&user, c)
+	resAuth, err :=  createToken(&user, c)
 	if err != nil {
 		log.Println("action=Signup failed to create token")
 		c.Error(err).SetType(gin.ErrorTypePublic).SetMeta(http.StatusInternalServerError)
 		return
 	}
 
-	data := map[string]string{"token": token}
+	data := map[string]string{"userId": fmt.Sprintf("%d", resAuth.userId), "token":resAuth.token}
 	c.JSON(http.StatusCreated, gin.H{
 		"status": http.StatusOK,
 		"data": data,
@@ -58,35 +59,39 @@ func Login(c *gin.Context){
 		c.Error(err).SetType(gin.ErrorTypePublic).SetMeta(http.StatusBadRequest)
 		return
 	}
-	token, err := createToken(&user, c)
+	resAuth, err := createToken(&user, c)
 	if err != nil {
 		log.Println("action=Login failed to create token")
 		c.Error(err).SetType(gin.ErrorTypePublic).SetMeta(http.StatusInternalServerError)
 		return
 	}
-
-	data := map[string]string{"token": token}
+	data := map[string]string{"userId": fmt.Sprintf("%d", resAuth.userId), "token":resAuth.token}
 	c.JSON(http.StatusCreated, gin.H{
 		"status": http.StatusOK,
 		"data": data,
 	})
 }
 
+type resAuth struct {
+	userId int64
+	token string
+}
 
-func createToken(user *models.User, c *gin.Context) (string, error){
+
+func createToken(user *models.User, c *gin.Context) (*resAuth, error){
 	userRepository := repository.UserRepository{}
 	matchUser, err := userRepository.GetByEmail(user.Email)
 	if err != nil {
 		log.Println("action=createToken failed to get user by email")
 		c.Error(err).SetType(gin.ErrorTypePublic).SetMeta(http.StatusInternalServerError)
-		return "", err
+		return nil, err
 	}
 
 	err = bcrypt.CompareHashAndPassword([]byte(matchUser.Password), []byte(user.Password))
 	if err != nil {
 		log.Println("action=createToken invalid password")
 		c.Error(err).SetType(gin.ErrorTypePublic).SetMeta(http.StatusBadRequest)
-		return "", err
+		return nil, err
 	}
 
 	tokenService := service.TokenService{}
@@ -94,9 +99,11 @@ func createToken(user *models.User, c *gin.Context) (string, error){
 	if err != nil {
 		log.Println("action=createToken failed create token")
 		c.Error(err).SetType(gin.ErrorTypePublic).SetMeta(http.StatusInternalServerError)
-		return "", err
+		return nil, err
 	}
-	return token, nil
+
+	resAuth := resAuth{token: token, userId: int64(matchUser.ID)}
+	return &resAuth, nil
 }
 
 func Router(group *gin.RouterGroup){

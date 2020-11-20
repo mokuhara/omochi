@@ -49,3 +49,12 @@
 2020/11/19 19:10:09 auth.go:41: invalid token
 2020/11/19 19:10:27 auth.go:54: action=Verify err=invalid character 'i' looking for beginning of value
 2020/11/19 19:10:27 auth.go:41: invalid token
+2020/11/19 22:00:38 auth.go:34: action=Signup failed to create user
+2020/11/19 22:00:38 error.go:15: UNIQUE constraint failed: users.email
+2020/11/19 22:01:23 auth.go:104: id:1
+2020/11/19 22:02:15 auth.go:106: id:1
+2020/11/19 22:05:29 auth.go:106: id:1
+2020/11/19 22:06:09 auth.go:106: id:1
+2020/11/19 22:06:10 auth.go:106: id:1
+2020/11/19 22:06:12 auth.go:106: id:1
+2020/11/19 22:07:21 auth.go:106: id:1

@@ -28,6 +28,7 @@ const (
 	lifetime =  30 * time.Minute
 )
 
+
 func (TokenService) Generate(user *models.User, now time.Time) (string, error){
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
 		userIDKey: user.ID,
@@ -35,6 +36,7 @@ func (TokenService) Generate(user *models.User, now time.Time) (string, error){
 		iatKey: now.Unix(),
 		expKey: now.Add(lifetime).Unix(),
 	})
+
 	return token.SignedString([]byte(secret))
 }
 
