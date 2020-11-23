@@ -13,5 +13,6 @@ func DBCon() *gorm.DB {
 		log.Fatalln(err)
 	}
 	//db.AutoMigrate(&User{}, &Profile{})
+	//db.AutoMigrate(&models.UserInfo{})
 	return db
 }

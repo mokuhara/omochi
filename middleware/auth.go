@@ -4,6 +4,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"log"
 	"net/http"
+	"omochi/app/repository"
 	"omochi/app/service"
 	"strconv"
 )
@@ -25,6 +26,29 @@ func IsLogin() gin.HandlerFunc{
 			c.JSON(http.StatusUnauthorized, gin.H{
 				"status": http.StatusUnauthorized,
 				"data": err.Error(),
+			})
+			c.Abort()
+		}
+	}
+}
+
+func IsExistsUserInfo() gin.HandlerFunc{
+	return func(c *gin.Context){
+		paramUserId, _ := strconv.ParseInt(c.Param("id"), 10, 64)
+		userInfoRepository := repository.UserInfoRepository{}
+		userInfo, err := userInfoRepository.GetByUserId(paramUserId)
+		if err != nil {
+			log.Println("invalid userId")
+			c.JSON(http.StatusBadRequest, gin.H{
+				"status": http.StatusBadRequest,
+				"data": err.Error(),
+			})
+			c.Abort()
+		}
+		if len(userInfo.Name) == 0 {
+			c.JSON(http.StatusUnauthorized, gin.H{
+				"status": http.StatusUnauthorized,
+				"data": "userInfo is not exist",
 			})
 			c.Abort()
 		}

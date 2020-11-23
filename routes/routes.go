@@ -9,6 +9,7 @@ import (
 	"omochi/app/controller/auth"
 	"omochi/app/controller/mypage"
 	"omochi/app/controller/specialist"
+	"omochi/app/controller/user"
 	"omochi/config"
 	"omochi/middleware"
 )
@@ -34,6 +35,7 @@ func Router(){
 	APIEngine.GET("/health", controller.Health)
 	{
 		auth.Router(APIEngine)
+		user.Router(APIEngine)
 		specialist.Router(APIEngine)
 		mypage.Router(APIEngine)
 		admin.Router(APIEngine)

@@ -1,7 +1,6 @@
 package auth
 
 import (
-	"fmt"
 	"github.com/gin-gonic/gin"
 	"golang.org/x/crypto/bcrypt"
 	"log"
@@ -44,7 +43,7 @@ func Signup(c *gin.Context){
 		return
 	}
 
-	data := map[string]string{"userId": fmt.Sprintf("%d", resAuth.userId), "token":resAuth.token}
+	data := map[string]interface{}{"userId": resAuth.userId, "token":resAuth.token}
 	c.JSON(http.StatusCreated, gin.H{
 		"status": http.StatusOK,
 		"data": data,
@@ -65,7 +64,7 @@ func Login(c *gin.Context){
 		c.Error(err).SetType(gin.ErrorTypePublic).SetMeta(http.StatusInternalServerError)
 		return
 	}
-	data := map[string]string{"userId": fmt.Sprintf("%d", resAuth.userId), "token":resAuth.token}
+	data := map[string]interface{}{"userId": resAuth.userId, "token":resAuth.token}
 	c.JSON(http.StatusCreated, gin.H{
 		"status": http.StatusOK,
 		"data": data,
@@ -110,6 +109,7 @@ func Router(group *gin.RouterGroup){
 	authEngine := group.Group("/auth")
 	{
 		authEngine.POST("/signup", Signup)
+		//authEngine.Use(middleware.IsExistsUserInfo())
 		authEngine.POST("/login", Login)
 	}
 }

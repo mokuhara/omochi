@@ -58,3 +58,9 @@
 2020/11/19 22:06:10 auth.go:106: id:1
 2020/11/19 22:06:12 auth.go:106: id:1
 2020/11/19 22:07:21 auth.go:106: id:1
+2020/11/24 00:56:30 auth.go:41: invalid userId
+2020/11/24 00:58:36 auth.go:41: invalid userId
+2020/11/24 01:07:29 userInfo.go:15: action=SaveUserInfo bind error
+2020/11/24 01:07:29 error.go:15: invalid character '\b' in string literal
+2020/11/24 01:09:58 userInfo.go:15: action=SaveUserInfo bind error
+2020/11/24 01:09:58 error.go:15: invalid character '\b' in string literal
