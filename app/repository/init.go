@@ -4,6 +4,7 @@ import (
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/sqlite"
 	"log"
+	"omochi/app/models"
 	"omochi/config"
 )
 
@@ -12,7 +13,7 @@ func DBCon() *gorm.DB {
 	if err != nil {
 		log.Fatalln(err)
 	}
-	//db.AutoMigrate(&User{}, &Profile{})
-	//db.AutoMigrate(&models.UserInfo{})
+	db.AutoMigrate(&models.User{}, &models.Client{}, &models.Specialist{})
+	db.AutoMigrate(&models.UserInfo{})
 	return db
 }

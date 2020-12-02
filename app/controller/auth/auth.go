@@ -27,12 +27,24 @@ func Signup(c *gin.Context){
 		return
 	}
 	user.Password = string(hash)
-	userRepository := repository.UserRepository{}
-	err = userRepository.Create(&user)
-	if err != nil {
-		log.Println("action=Signup failed to create user")
-		c.Error(err).SetType(gin.ErrorTypePublic).SetMeta(http.StatusInternalServerError)
-		return
+
+	switch user.Type {
+		case 1:
+			specialistRepository := repository.SpecialistRepository{}
+			err = specialistRepository.Create(&user)
+			if err != nil {
+				log.Println("action=Signup failed to create specialist")
+				c.Error(err).SetType(gin.ErrorTypePublic).SetMeta(http.StatusInternalServerError)
+				return
+			}
+		case 2:
+			clientRepository := repository.ClientRepository{}
+			err = clientRepository.Create(&user)
+			if err != nil {
+				log.Println("action=Signup failed to create client")
+				c.Error(err).SetType(gin.ErrorTypePublic).SetMeta(http.StatusInternalServerError)
+				return
+			}
 	}
 	//passwordをhash化前に戻す
 	user.Password = purePassword
