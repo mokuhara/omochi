@@ -12,6 +12,6 @@ const (
 type User struct {
 	gorm.Model
 	Email      string `gorm:"unique" json:"email"`
-	Password   string `json:"password"`
+	Password   string `gorm:"unique" json:"password"`
 	Type       Type  `json:"type"`
 }

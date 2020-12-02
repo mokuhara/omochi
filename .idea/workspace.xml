@@ -20,15 +20,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="78c39ff5-53bb-440a-ab52-276e6b12d128" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/app/models/client.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/models/company.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/models/specialist.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/repository/client.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/repository/specialist.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/controller/auth/auth.go" beforeDir="false" afterPath="$PROJECT_DIR$/app/controller/auth/auth.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/models/user.go" beforeDir="false" afterPath="$PROJECT_DIR$/app/models/user.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/models/userInfo.go" beforeDir="false" afterPath="$PROJECT_DIR$/app/models/userInfo.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/repository/init.go" beforeDir="false" afterPath="$PROJECT_DIR$/app/repository/init.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/logfile.log" beforeDir="false" afterPath="$PROJECT_DIR$/logfile.log" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/omochi.db" beforeDir="false" afterPath="$PROJECT_DIR$/omochi.db" afterDir="false" />
@@ -53,12 +47,15 @@
     <option name="indexEntireGoPath" value="false" />
   </component>
   <component name="ProjectId" id="1kQHeNvxzAaJi5glT4OaflTUQ8j" />
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
     <property name="DefaultGoTemplateProperty" value="Go File" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
@@ -87,6 +84,9 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
   </component>
   <component name="VgoProject">
     <integration-enabled>true</integration-enabled>

@@ -55,7 +55,7 @@ func Signup(c *gin.Context){
 		return
 	}
 
-	data := map[string]interface{}{"userId": resAuth.userId, "token":resAuth.token}
+	data := map[string]interface{}{"userId": resAuth.userId, "token":resAuth.token, "type": resAuth.userType}
 	c.JSON(http.StatusCreated, gin.H{
 		"status": http.StatusOK,
 		"data": data,
@@ -76,7 +76,7 @@ func Login(c *gin.Context){
 		c.Error(err).SetType(gin.ErrorTypePublic).SetMeta(http.StatusInternalServerError)
 		return
 	}
-	data := map[string]interface{}{"userId": resAuth.userId, "token":resAuth.token}
+	data := map[string]interface{}{"userId": resAuth.userId, "token":resAuth.token, "type": resAuth.userType}
 	c.JSON(http.StatusCreated, gin.H{
 		"status": http.StatusOK,
 		"data": data,
@@ -84,8 +84,9 @@ func Login(c *gin.Context){
 }
 
 type resAuth struct {
-	userId int64
-	token string
+	userId    int64
+	userType  models.Type
+	token     string
 }
 
 
@@ -113,7 +114,7 @@ func createToken(user *models.User, c *gin.Context) (*resAuth, error){
 		return nil, err
 	}
 
-	resAuth := resAuth{token: token, userId: int64(matchUser.ID)}
+	resAuth := resAuth{token: token, userId: int64(matchUser.ID), userType: matchUser.Type}
 	return &resAuth, nil
 }
 

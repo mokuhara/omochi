@@ -264,3 +264,16 @@
 2020/11/29 23:04:37 error.go:15: crypto/bcrypt: hashedPassword is not the hash of the given password
 2020/11/30 00:43:18 auth.go:33: action=Signup failed to create user
 2020/11/30 00:43:18 error.go:15: UNIQUE constraint failed: users.email
+2020/12/02 22:56:57 auth.go:96: action=createToken failed to get user by email
+2020/12/02 22:56:57 auth.go:53: action=Signup failed to create token
+2020/12/02 22:56:57 error.go:15: record not found
+2020/12/02 22:57:10 auth.go:36: action=Signup failed to create specialist
+2020/12/02 22:57:10 error.go:15: UNIQUE constraint failed: users.email
+2020/12/02 22:57:50 auth.go:69: action=Login bind error
+2020/12/02 22:57:50 error.go:15: invalid character '}' looking for beginning of object key string
+2020/12/02 23:04:35 auth.go:36: action=Signup failed to create specialist
+2020/12/02 23:04:35 error.go:15: UNIQUE constraint failed: users.email
+2020/12/02 23:06:54 auth.go:44: action=Signup failed to create client
+2020/12/02 23:06:54 error.go:15: no such table: companies
+2020/12/02 23:10:29 auth.go:44: action=Signup failed to create client
+2020/12/02 23:10:29 error.go:15: UNIQUE constraint failed: users.email
