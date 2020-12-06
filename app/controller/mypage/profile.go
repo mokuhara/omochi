@@ -11,7 +11,7 @@ import (
 )
 
 func GetProfile(c *gin.Context){
-	paramUserId, err := strconv.ParseInt(c.Param("id"), 10, 64)
+	paramUserId, err := strconv.ParseInt(c.Param("userId"), 10, 64)
 	if err != nil {
 		log.Println("action=GetProfile user_id is not found")
 		c.Error(err).SetType(gin.ErrorTypePublic).SetMeta(http.StatusBadRequest)
@@ -80,7 +80,7 @@ func UpdateProfile(c *gin.Context){
 }
 
 func DeleteProfile(c *gin.Context) {
-	paramUserId, err := strconv.ParseInt(c.Param("id"), 10,64)
+	paramUserId, err := strconv.ParseInt(c.Param("userId"), 10,64)
 	if err != nil {
 		log.Println("action=DeleteProfile user_id is not found")
 		c.Error(err).SetType(gin.ErrorTypePublic).SetMeta(http.StatusBadRequest)
@@ -105,8 +105,8 @@ func DeleteProfile(c *gin.Context) {
 	})
 }
 
-func Router(group *gin.RouterGroup){
-	myPageEngine := group.Group("/mypage/:id")
+func ProfileRouter(group *gin.RouterGroup){
+	myPageEngine := group.Group("/mypage/:userId")
 	myPageEngine.Use(middleware.IsLogin())
 	{
 		UserProfileEngine := myPageEngine.Group("/user")

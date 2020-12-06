@@ -37,7 +37,8 @@ func Router(){
 		auth.Router(APIEngine)
 		user.Router(APIEngine)
 		specialist.Router(APIEngine)
-		mypage.Router(APIEngine)
+		mypage.ProfileRouter(APIEngine)
+		mypage.BizPackRouter(APIEngine)
 		admin.Router(APIEngine)
 	}
 	engine.Run(fmt.Sprintf(":%d",config.Config.Port))

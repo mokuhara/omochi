@@ -277,3 +277,53 @@
 2020/12/02 23:06:54 error.go:15: no such table: companies
 2020/12/02 23:10:29 auth.go:44: action=Signup failed to create client
 2020/12/02 23:10:29 error.go:15: UNIQUE constraint failed: users.email
+2020/12/03 00:12:18 auth.go:44: action=Signup failed to create client
+2020/12/03 00:12:18 error.go:15: UNIQUE constraint failed: users.email
+2020/12/03 00:22:48 auth.go:104: action=createToken invalid password
+2020/12/03 00:22:48 auth.go:75: action=Login failed to create token
+2020/12/03 00:22:48 error.go:15: crypto/bcrypt: hashedPassword is not the hash of the given password
+2020/12/05 02:19:00 bizpack.go:17: action=CreateBizpack bind error
+2020/12/05 02:19:00 error.go:15: invalid character '7' after object key
+2020/12/05 02:19:38 bizpack.go:17: action=CreateBizpack bind error
+2020/12/05 02:19:38 error.go:15: json: cannot unmarshal string into Go struct field Bizpack.products of type models.Product
+2020/12/05 02:20:24 bizpack.go:24: action=CreateBizpack failed to create bizpack
+2020/12/05 02:20:24 error.go:15: no such table: bizpacks
+2020/12/05 02:22:45 bizpack.go:17: action=CreateBizpack bind error
+2020/12/05 02:22:45 error.go:15: json: cannot unmarshal string into Go struct field Bizpack.products of type models.Product
+2020/12/05 02:23:32 bizpack.go:17: action=CreateBizpack bind error
+2020/12/05 02:23:32 error.go:15: invalid character ',' after object key
+2020/12/05 02:23:41 bizpack.go:17: action=CreateBizpack bind error
+2020/12/05 02:23:41 error.go:15: invalid character 'n' after object key:value pair
+2020/12/05 02:27:53 bizpack.go:17: action=CreateBizpack bind error
+2020/12/05 02:27:53 error.go:15: invalid character 'n' after object key:value pair
+2020/12/05 09:27:33 auth.go:44: action=Signup failed to create client
+2020/12/05 09:27:33 error.go:15: UNIQUE constraint failed: users.email
+2020/12/05 09:27:38 auth.go:44: action=Signup failed to create client
+2020/12/05 09:27:38 error.go:15: UNIQUE constraint failed: users.email
+2020/12/05 09:28:03 auth.go:97: action=createToken failed to get user by email
+2020/12/05 09:28:03 auth.go:75: action=Login failed to create token
+2020/12/05 09:28:03 error.go:15: record not found
+2020/12/05 09:36:17 auth.go:44: action=Signup failed to create client
+2020/12/05 09:36:17 error.go:15: UNIQUE constraint failed: users.email
+2020/12/05 09:39:10 auth.go:44: action=Signup failed to create client
+2020/12/05 09:39:10 error.go:15: UNIQUE constraint failed: users.email
+2020/12/05 09:41:28 auth.go:44: action=Signup failed to create client
+2020/12/05 09:41:28 error.go:15: UNIQUE constraint failed: users.email
+2020/12/06 14:17:14 bizpack.go:17: action=CreateBizpack bind error
+2020/12/06 14:17:14 error.go:15: invalid character 'p' looking for beginning of value
+2020/12/06 14:19:25 bizpack.go:17: action=CreateBizpack bind error
+2020/12/06 14:19:25 error.go:15: invalid character '}' looking for beginning of object key string
+2020/12/06 14:35:41 bizpack.go:101: action=GetAllBizpacks bizpack is not found
+2020/12/06 14:35:41 error.go:15: can't preload field Parties for models.Bizpack
+2020/12/06 14:36:58 bizpack.go:101: action=GetAllBizpacks bizpack is not found
+2020/12/06 14:36:58 error.go:15: can't preload field Parties for models.Bizpack
+2020/12/06 14:37:01 bizpack.go:101: action=GetAllBizpacks bizpack is not found
+2020/12/06 14:37:01 error.go:15: can't preload field Parties for models.Bizpack
+2020/12/06 14:38:07 bizpack.go:101: action=GetAllBizpacks bizpack is not found
+2020/12/06 14:38:07 error.go:15: can't preload field Products for models.Bizpack
+2020/12/06 14:38:13 bizpack.go:101: action=GetAllBizpacks bizpack is not found
+2020/12/06 14:38:13 error.go:15: can't preload field Products for models.Bizpack
+2020/12/06 14:39:54 bizpack.go:101: action=GetAllBizpacks bizpack is not found
+2020/12/06 14:39:54 error.go:15: can't preload field Products for models.Bizpack
+2020/12/06 14:47:49 bizpack.go:101: action=GetAllBizpacks bizpack is not found
+2020/12/06 14:47:49 error.go:15: can't preload field Products for models.Bizpack
