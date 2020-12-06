@@ -327,3 +327,30 @@
 2020/12/06 14:39:54 error.go:15: can't preload field Products for models.Bizpack
 2020/12/06 14:47:49 bizpack.go:101: action=GetAllBizpacks bizpack is not found
 2020/12/06 14:47:49 error.go:15: can't preload field Products for models.Bizpack
+2020/12/06 16:37:09 auth.go:97: action=createToken failed to get user by email
+2020/12/06 16:37:09 auth.go:75: action=Login failed to create token
+2020/12/06 16:37:09 error.go:15: record not found
+2020/12/06 16:37:56 auth.go:56: action=Verify err=token contains an invalid number of segments
+2020/12/06 16:37:56 auth.go:16: invalid token
+2020/12/06 16:51:13 auth.go:56: action=Verify err=token contains an invalid number of segments
+2020/12/06 16:51:13 auth.go:16: invalid token
+2020/12/06 16:52:06 auth.go:56: action=Verify err=token contains an invalid number of segments
+2020/12/06 16:52:06 auth.go:16: invalid token
+2020/12/06 19:19:37 bizpack.go:18: action=CreateBizpack bind error
+2020/12/06 19:19:37 error.go:15: json: cannot unmarshal string into Go struct field Bizpack.products of type models.Product
+2020/12/06 19:20:38 bizpack.go:18: action=CreateBizpack bind error
+2020/12/06 19:20:38 error.go:15: json: cannot unmarshal string into Go struct field Bizpack.products of type models.Product
+2020/12/06 19:20:42 bizpack.go:18: action=CreateBizpack bind error
+2020/12/06 19:20:42 error.go:15: json: cannot unmarshal string into Go struct field Bizpack.products of type models.Product
+2020/12/06 19:20:58 bizpack.go:18: action=CreateBizpack bind error
+2020/12/06 19:20:58 error.go:15: json: cannot unmarshal string into Go struct field Bizpack.products of type models.Product
+2020/12/06 23:33:46 auth.go:56: action=Verify err=token contains an invalid number of segments
+2020/12/06 23:33:46 auth.go:16: invalid token
+2020/12/06 23:33:56 bizpack.go:18: action=CreateBizpack bind error
+2020/12/06 23:33:56 error.go:15: json: cannot unmarshal string into Go struct field Bizpack.scale of type int64
+2020/12/06 23:37:59 bizpack.go:18: action=CreateBizpack bind error
+2020/12/06 23:37:59 error.go:15: json: cannot unmarshal string into Go struct field Bizpack.scale of type int64
+2020/12/06 23:38:44 bizpack.go:18: action=CreateBizpack bind error
+2020/12/06 23:38:44 error.go:15: json: cannot unmarshal string into Go struct field Bizpack.scale of type int64
+2020/12/06 23:43:38 auth.go:56: action=Verify err=Token is expired
+2020/12/06 23:43:38 auth.go:16: invalid token
