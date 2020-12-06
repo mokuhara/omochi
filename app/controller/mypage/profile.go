@@ -6,19 +6,20 @@ import (
 	"net/http"
 	"omochi/app/models"
 	"omochi/app/repository"
+	"omochi/app/service"
 	"omochi/middleware"
-	"strconv"
 )
 
 func GetProfile(c *gin.Context){
-	paramUserId, err := strconv.ParseInt(c.Param("userId"), 10, 64)
+	tokenService := service.TokenService{}
+	user, err := tokenService.Verify(c)
 	if err != nil {
 		log.Println("action=GetProfile user_id is not found")
 		c.Error(err).SetType(gin.ErrorTypePublic).SetMeta(http.StatusBadRequest)
 		return
 	}
 	profileRepository := repository.ProfileRepository{}
-	profile, err := profileRepository.Get(paramUserId)
+	profile, err := profileRepository.Get(user.UserId)
 	if err != nil {
 		log.Println("action=GetProfile profile is not found")
 		c.Error(err).SetType(gin.ErrorTypePublic).SetMeta(http.StatusInternalServerError)
@@ -80,14 +81,15 @@ func UpdateProfile(c *gin.Context){
 }
 
 func DeleteProfile(c *gin.Context) {
-	paramUserId, err := strconv.ParseInt(c.Param("userId"), 10,64)
+	tokenService := service.TokenService{}
+	user, err := tokenService.Verify(c)
 	if err != nil {
 		log.Println("action=DeleteProfile user_id is not found")
 		c.Error(err).SetType(gin.ErrorTypePublic).SetMeta(http.StatusBadRequest)
 		return
 	}
 	profileRepository := repository.ProfileRepository{}
-	profile, err := profileRepository.Get(paramUserId)
+	profile, err := profileRepository.Get(user.UserId)
 	if err != nil {
 		log.Println("action=DeleteProfile failed to get profile")
 		c.Error(err).SetType(gin.ErrorTypePublic).SetMeta(http.StatusInternalServerError)
@@ -106,7 +108,7 @@ func DeleteProfile(c *gin.Context) {
 }
 
 func ProfileRouter(group *gin.RouterGroup){
-	myPageEngine := group.Group("/mypage/:userId")
+	myPageEngine := group.Group("/mypage")
 	myPageEngine.Use(middleware.IsLogin())
 	{
 		UserProfileEngine := myPageEngine.Group("/user")

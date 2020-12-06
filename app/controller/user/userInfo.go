@@ -32,7 +32,7 @@ func CreateUserInfo(c *gin.Context) {
 
 
 func Router(group *gin.RouterGroup) {
-	usrInfoEngine := group.Group("/userInfo/:id")
+	usrInfoEngine := group.Group("/userInfo")
 	usrInfoEngine.Use(middleware.IsLogin())
 	{
 		usrInfoEngine.POST("/create", CreateUserInfo)

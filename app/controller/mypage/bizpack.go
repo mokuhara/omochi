@@ -6,6 +6,7 @@ import (
 	"net/http"
 	"omochi/app/models"
 	"omochi/app/repository"
+	"omochi/app/service"
 	"omochi/middleware"
 	"strconv"
 )
@@ -73,14 +74,15 @@ func DeleteBizpack(c *gin.Context) {
 }
 
 func GetUserBizpacks(c *gin.Context) {
-	paramBizpackId , err := strconv.ParseInt(c.Param("userId"), 10, 64)
+	tokenService := service.TokenService{}
+	user, err := tokenService.Verify(c)
 	if err != nil {
 		log.Println("action=DeleteBizpack user_id is not found")
 		c.Error(err).SetType(gin.ErrorTypePublic).SetMeta(http.StatusBadRequest)
 		return
 	}
 	bizpackRepository := repository.BizpackRepository{}
-	bizpacks, err := bizpackRepository.GetByUserId(paramBizpackId)
+	bizpacks, err := bizpackRepository.GetByUserId(user.UserId)
 	if err != nil {
 		log.Println("action=GetUserBizpacks failed to get bizpacks")
 		c.Error(err).SetType(gin.ErrorTypePublic).SetMeta(http.StatusInternalServerError)
@@ -110,7 +112,7 @@ func GetAllBizpacks(c *gin.Context) {
 }
 
 func BizPackRouter(group *gin.RouterGroup){
-	myPageEngine := group.Group("/mypage/:userId")
+	myPageEngine := group.Group("/mypage")
 	myPageEngine.Use(middleware.IsLogin())
 	{
 		BizpackEngine := myPageEngine.Group("/bizpack")
