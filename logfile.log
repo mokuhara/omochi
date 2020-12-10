@@ -354,3 +354,17 @@
 2020/12/06 23:38:44 error.go:15: json: cannot unmarshal string into Go struct field Bizpack.scale of type int64
 2020/12/06 23:43:38 auth.go:56: action=Verify err=Token is expired
 2020/12/06 23:43:38 auth.go:16: invalid token
+2020/12/07 00:28:20 auth.go:56: action=Verify err=Token is expired
+2020/12/07 00:28:20 auth.go:16: invalid token
+2020/12/09 00:57:53 auth.go:56: action=Verify err=illegal base64 data at input byte 0
+2020/12/09 00:57:53 auth.go:16: invalid token
+2020/12/09 01:19:36 bizpack.go:18: action=CreateBizpack bind error
+2020/12/09 01:19:36 error.go:15: invalid character '"' after object key:value pair
+2020/12/09 01:24:28 auth.go:56: action=Verify err=Token is expired
+2020/12/09 01:24:28 auth.go:16: invalid token
+2020/12/09 01:35:38 auth.go:56: action=Verify err=Token is expired
+2020/12/09 01:35:38 auth.go:16: invalid token
+2020/12/10 02:11:18 auth.go:56: action=Verify err=Token is expired
+2020/12/10 02:11:18 auth.go:16: invalid token
+2020/12/10 10:11:53 bizpack.go:108: action=GetUserBizpacks failed to get bizpacks
+2020/12/10 10:11:53 error.go:15: record not found

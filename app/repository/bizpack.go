@@ -66,3 +66,14 @@ func (BizpackRepository) GetByUserId(userId int64) (*[]models.Bizpack, error){
 	}
 	return &bizpacks, nil
 }
+
+func (BizpackRepository) GetByBizpackId(bizpackId int64) (*models.Bizpack, error) {
+	db := DBCon()
+	defer db.Close()
+	bizpack := models.Bizpack{}
+
+	if err := db.Set("gorm:auto_preload", true).Where("id = ?", bizpackId).First(&bizpack).Error; err != nil {
+		return nil, err
+	}
+	return &bizpack, nil
+}

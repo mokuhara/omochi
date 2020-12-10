@@ -17,14 +17,27 @@ import (
 func Router(){
 	engine := gin.Default()
 	engine.Use(middleware.ErrorMiddleware())
+	//engine.Use(cors.Default())
 	engine.Use(cors.New(cors.Config{
+		AllowMethods: []string{
+			"POST",
+			"GET",
+			"OPTIONS",
+			"PUT",
+			"DELETE",
+		},
 		AllowHeaders: []string{
 			"Access-Control-Allow-Headers",
+			"Access-Control-Allow-Origin",
+			"Access-Control-Request-Method",
+			"Access-Control-Request-Headers",
+			"Origin",
 			"Content-Type",
 			"Content-Length",
 			"Accept-Encoding",
 			"X-CSRF-Token",
 			"Authorization",
+			"authorization",
 		},
 		//TODO AllowOriginsがザルなので絞る
 		AllowOrigins: []string{
