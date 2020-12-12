@@ -1,4 +1,5 @@
 vendor/*
 !vendor/vendor.json
 config.ini
+logfile.log
 omochi.db
