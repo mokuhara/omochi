@@ -14,4 +14,5 @@ type Category struct {
 	gorm.Model
 	Type categoryType `json:"type"`
 	BizpackID int64
+	PortfolioID int64
 }

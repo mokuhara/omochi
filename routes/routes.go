@@ -52,6 +52,7 @@ func Router(){
 		specialist.Router(APIEngine)
 		mypage.ProfileRouter(APIEngine)
 		mypage.BizPackRouter(APIEngine)
+		mypage.PortfolioRouter(APIEngine)
 		admin.Router(APIEngine)
 	}
 	engine.Run(fmt.Sprintf(":%d",config.Config.Port))

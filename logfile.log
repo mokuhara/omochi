@@ -368,3 +368,19 @@
 2020/12/10 02:11:18 auth.go:16: invalid token
 2020/12/10 10:11:53 bizpack.go:108: action=GetUserBizpacks failed to get bizpacks
 2020/12/10 10:11:53 error.go:15: record not found
+2020/12/10 22:50:06 auth.go:56: action=Verify err=token contains an invalid number of segments
+2020/12/10 22:50:06 auth.go:16: invalid token
+2020/12/10 22:50:20 auth.go:56: action=Verify err=token contains an invalid number of segments
+2020/12/10 22:50:20 auth.go:16: invalid token
+2020/12/10 22:51:18 auth.go:56: action=Verify err=token contains an invalid number of segments
+2020/12/10 22:51:18 auth.go:16: invalid token
+2020/12/10 22:51:27 auth.go:56: action=Verify err=token contains an invalid number of segments
+2020/12/10 22:51:27 auth.go:16: invalid token
+2020/12/10 22:51:50 auth.go:56: action=Verify err=token contains an invalid number of segments
+2020/12/10 22:51:50 auth.go:16: invalid token
+2020/12/10 22:59:24 auth.go:56: action=Verify err=token contains an invalid number of segments
+2020/12/10 22:59:24 auth.go:16: invalid token
+2020/12/10 22:59:34 auth.go:56: action=Verify err=token contains an invalid number of segments
+2020/12/10 22:59:34 auth.go:16: invalid token
+2020/12/10 22:59:46 auth.go:56: action=Verify err=token contains an invalid number of segments
+2020/12/10 22:59:46 auth.go:16: invalid token
