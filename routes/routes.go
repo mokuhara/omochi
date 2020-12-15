@@ -17,20 +17,15 @@ import (
 func Router(){
 	engine := gin.Default()
 	engine.Use(middleware.ErrorMiddleware())
+
 	engine.Use(cors.New(cors.Config{
-		AllowHeaders: []string{
-			"Access-Control-Allow-Headers",
-			"Content-Type",
-			"Content-Length",
-			"Accept-Encoding",
-			"X-CSRF-Token",
-			"Authorization",
-		},
-		//TODO AllowOriginsがザルなので絞る
-		AllowOrigins: []string{
-			"*",
-		},
+		AllowOrigins:     []string{"http://localhost:3000"}, // MEMO: 本番はOriginが異なるので環境変数で対応する？
+		AllowMethods:     []string{"GET", "POST", "PUT", "PATCH"},
+		AllowHeaders:     []string{"Origin", "Authorization"},
+		ExposeHeaders:    []string{"Content-Length"},
+		AllowCredentials: true,
 	}))
+
 	APIEngine := engine.Group("/v1")
 	APIEngine.GET("/health", controller.Health)
 	{
@@ -39,7 +34,9 @@ func Router(){
 		specialist.Router(APIEngine)
 		mypage.ProfileRouter(APIEngine)
 		mypage.BizPackRouter(APIEngine)
+		mypage.PortfolioRouter(APIEngine)
 		admin.Router(APIEngine)
 	}
+
 	engine.Run(fmt.Sprintf(":%d",config.Config.Port))
 }

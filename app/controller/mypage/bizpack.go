@@ -95,6 +95,26 @@ func GetUserBizpacks(c *gin.Context) {
 
 }
 
+func GetUserBizpackById(c * gin.Context) {
+	bizpackId, err := strconv.ParseInt(c.Param("bizpackId"), 10, 64)
+	if err != nil {
+		log.Println("action=DeleteBizpack user_id is not found")
+		c.Error(err).SetType(gin.ErrorTypePublic).SetMeta(http.StatusBadRequest)
+		return
+	}
+	bizpackRepository := repository.BizpackRepository{}
+	bizpacks, err := bizpackRepository.GetByBizpackId(bizpackId)
+	if err != nil {
+		log.Println("action=GetUserBizpacks failed to get bizpacks")
+		c.Error(err).SetType(gin.ErrorTypePublic).SetMeta(http.StatusInternalServerError)
+		return
+	}
+	c.JSON(http.StatusOK, gin.H{
+		"status": http.StatusOK,
+		"data": *bizpacks,
+	})
+}
+
 func GetAllBizpacks(c *gin.Context) {
 	bizpacks := &[]models.Bizpack{}
 	bizpackRepository := repository.BizpackRepository{}
@@ -117,11 +137,12 @@ func BizPackRouter(group *gin.RouterGroup){
 	{
 		BizpackEngine := myPageEngine.Group("/bizpack")
 		{
-			BizpackEngine.GET("/", GetUserBizpacks)
-			BizpackEngine.GET("/all", GetAllBizpacks)
 			BizpackEngine.POST("/create", CreateBizpack)
 			BizpackEngine.PUT("/:bizpackId/update", UpdateBizpack)
 			BizpackEngine.DELETE("/:bizpackId/delete", DeleteBizpack)
+			BizpackEngine.GET("/get/:bizpackId", GetUserBizpackById)
+			BizpackEngine.GET("/all", GetAllBizpacks)
+			BizpackEngine.GET("/", GetUserBizpacks)
 		}
 	}
 }

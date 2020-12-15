@@ -2,7 +2,7 @@ package models
 
 import "github.com/jinzhu/gorm"
 
-type Bizpack struct {
+type Portfolio struct {
 	gorm.Model
 	Products    []Product `json:"products"`
 	User        User
@@ -15,6 +15,4 @@ type Bizpack struct {
 	UnitPrice   int64     `json:"unitPrice"`
 	Duration    int64     `json:"duration"`
 	IsPublic    bool      `json:"isPublic"`
-	Party       Party
-	PartyID     int64	  `json:"partyId"`
 }
