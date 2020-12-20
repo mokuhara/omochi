@@ -12,6 +12,9 @@ type ConfigList struct  {
 
 	Port int
 	LogFile string
+
+	ZoomEndpoint string
+	ZoomJwt string
 }
 
 var Config ConfigList
@@ -28,5 +31,7 @@ func init(){
 		SQLDriver: cfg.Section("db").Key("driver").String(),
 		Port: cfg.Section("web").Key("port").MustInt(),
 		LogFile: cfg.Section("web").Key("log_file").String(),
+		ZoomEndpoint: cfg.Section("zoom").Key("endpoint").String(),
+		ZoomJwt: cfg.Section("zoom").Key("jwt").String(),
 	}
 }

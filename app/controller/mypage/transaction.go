@@ -1,13 +1,16 @@
 package mypage
 
 import (
+	"bytes"
+	"encoding/json"
 	"github.com/gin-gonic/gin"
+	"io/ioutil"
 	"log"
 	"net/http"
 	"omochi/app/models"
 	"omochi/app/repository"
 	"omochi/app/service"
-	"omochi/middleware"
+	"omochi/config"
 	"strconv"
 )
 
@@ -255,10 +258,56 @@ func GetTransactionReview(c *gin.Context){
 }
 
 func CreateVideoMeeting(c *gin.Context){
-	videoMeeting := models.VideoMeeting{}
-	err := c.BindJSON(&videoMeeting)
+	type setting struct {
+		Use_pmi string `json:"use_pmi"`
+	}
+
+	type zoomCreateRoom struct {
+		Topic string  `json:"topic"`
+		Type string `json:"type"`
+		Start_time string `json:"start_time"`
+		Timezone string `json:"timezone"`
+		Settings setting
+	}
+
+	zoomCreateRoomStruct := zoomCreateRoom{}
+	err := c.BindJSON(&zoomCreateRoomStruct)
 	if err != nil {
 		log.Println("action=CreateVideoMeeting bind error")
+		c.Error(err).SetType(gin.ErrorTypePublic).SetMeta(http.StatusBadRequest)
+		return
+	}
+    endpoint := config.Config.ZoomEndpoint
+    jwt := config.Config.ZoomJwt
+	zoomCreateRoomJson, err := json.Marshal(zoomCreateRoomStruct)
+	if err != nil {
+		log.Println("action=CreateVideoMeeting zoomCreateRoom Marshal error")
+		c.Error(err).SetType(gin.ErrorTypePublic).SetMeta(http.StatusBadRequest)
+		return
+	}
+	req, _ := http.NewRequest(http.MethodPost, endpoint, bytes.NewBuffer(zoomCreateRoomJson))
+	req.Header.Set("Content-Type", "application/json")
+	req.Header.Set("Authorization", "Bearer " + jwt)
+	client := &http.Client{}
+	resp, err := client.Do(req)
+	if err != nil {
+		log.Println("action=CreateVideoMeeting failed to create zoom room")
+		c.Error(err).SetType(gin.ErrorTypePublic).SetMeta(http.StatusBadRequest)
+		return
+	}
+	defer resp.Body.Close()
+	if resp.StatusCode != http.StatusCreated {
+		c.JSON(http.StatusInternalServerError, gin.H{
+			"status": http.StatusInternalServerError,
+			"data": "failed to create zoom room",
+		})
+	}
+
+	body, _ := ioutil.ReadAll(resp.Body)
+	videoMeeting := models.VideoMeeting{}
+	err = json.Unmarshal(body, &videoMeeting)
+	if err != nil {
+		log.Println("action=CreateVideoMeeting failed to unmarshal videMeeting")
 		c.Error(err).SetType(gin.ErrorTypePublic).SetMeta(http.StatusBadRequest)
 		return
 	}
@@ -271,9 +320,10 @@ func CreateVideoMeeting(c *gin.Context){
 	}
 	c.JSON(http.StatusOK, gin.H{
 		"status": http.StatusOK,
-		"data": "",
+		"data": videoMeeting,
 	})
 }
+
 func UpdateVideoMeeting(c *gin.Context){
 	videoMeeting := models.VideoMeeting{}
 	err := c.BindJSON(&videoMeeting)
@@ -336,7 +386,7 @@ func GetTransactionVideoMeeting(c *gin.Context){
 
 func TransactionRouter(group *gin.RouterGroup) {
 	myPageEngine := group.Group("/mypage")
-	myPageEngine.Use(middleware.IsLogin())
+	//myPageEngine.Use(middleware.IsLogin())
 	{
 		transactionEngine := myPageEngine.Group("/transaction")
 		{

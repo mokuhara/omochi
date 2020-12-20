@@ -7,7 +7,7 @@ import (
 
 type VideoMeeting struct {
 	gorm.Model
-	Name      string    `json:"name"`
-	Url       string    `json:"url"`
-	StartedAt time.Time `json:"startedAt"`
+	Name      string    `json:"topic"`
+	Url       string    `json:"join_url"`
+	StartedAt time.Time `json:"start_time"`
 }
