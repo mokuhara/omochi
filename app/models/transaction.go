@@ -21,6 +21,6 @@ type Transaction struct {
 	BizpackID     int64          `json:"bizpackId"`
 	Status        status         `json:"status"`
 	VideoMeetings []VideoMeeting `json:"videoMeetings" gorm:"save_associations:false"`
-	Payments      []Payment      `json:"payments" gorm:"save_associations:false"`
+	//Payments      []Payment      `json:"payments" gorm:"save_associations:false"`
 	Reviews       []Review       `json:"reviews" gorm:"save_associations:false"`
 }
