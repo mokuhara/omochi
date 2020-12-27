@@ -16,7 +16,7 @@ func DBCon() *gorm.DB {
 	//db.AutoMigrate(&models.User{}, &models.Client{}, &models.Specialist{}, &models.Company{})
 	//db.AutoMigrate(&models.UserInfo{})
 	//db.AutoMigrate(&models.Bizpack{}, &models.Party{}, &models.Product{}, &models.Category{})
-	db.AutoMigrate(&models.Payment{}, &models.Transaction{}, &models.VideoMeeting{}, models.Review{})
-
+	//db.AutoMigrate(&models.Payment{}, &models.Transaction{}, &models.VideoMeeting{}, models.Review{})
+	db.AutoMigrate(&models.Issue{})
 	return db
 }
