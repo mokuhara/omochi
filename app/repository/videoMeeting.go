@@ -44,3 +44,14 @@ func (VideoMeetingRepository) GetByUserId(userId int64) (*[]models.VideoMeeting,
 	}
 	return &videoMeetings, nil
 }
+
+func (VideoMeetingRepository) GetByTransactionId(transactionId int64) (*[]models.VideoMeeting, error) {
+	db := DBCon()
+	defer db.Close()
+	videoMeetings := []models.VideoMeeting{}
+
+	if err := db.Set("gorm:auto_preload", true).Where("transaction_id = ?", transactionId).Find(&videoMeetings).Error; err != nil {
+		return nil, err
+	}
+	return &videoMeetings, nil
+}

@@ -17,5 +17,4 @@ type Bizpack struct {
 	IsPublic    bool      `json:"isPublic"`
 	Party       Party
 	PartyID     int64	  `json:"partyId"`
-	Transactions []Transaction `gorm:"save_associations:false"`
 }

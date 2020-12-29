@@ -236,18 +236,18 @@ func DeleteReview(c *gin.Context){
 		"data": "",
 	})
 }
-func GetTransactionReview(c *gin.Context){
+func GetTransactionReviewByUserId(c *gin.Context){
 	tokenService := service.TokenService{}
 	user, err := tokenService.Verify(c)
 	if err != nil {
-		log.Println("action=GetTransactionReview user_id is not found")
+		log.Println("action=GetTransactionReviewByUserId user_id is not found")
 		c.Error(err).SetType(gin.ErrorTypePublic).SetMeta(http.StatusBadRequest)
 		return
 	}
 	reviewRepository := repository.ReviewRepository{}
 	reviews, err := reviewRepository.GetByUserId(user.UserId)
 	if err != nil {
-		log.Println("action=GetTransactionReview failed to get review")
+		log.Println("action=GetTransactionReviewByUserId failed to get review")
 		c.Error(err).SetType(gin.ErrorTypePublic).SetMeta(http.StatusInternalServerError)
 		return
 	}
@@ -257,6 +257,28 @@ func GetTransactionReview(c *gin.Context){
 	})
 }
 
+func GetTransactionReviewByTransactionId(c *gin.Context){
+	paramTransactionId, err := strconv.ParseInt(c.Param("transactionId"), 10, 64)
+	if err != nil {
+		log.Println("action=GetTransactionReviewByTransactionId user_id is not found")
+		c.Error(err).SetType(gin.ErrorTypePublic).SetMeta(http.StatusBadRequest)
+		return
+	}
+	reviewRepository := repository.ReviewRepository{}
+	reviews, err := reviewRepository.GetByTransactionId(paramTransactionId)
+	if err != nil {
+		log.Println("action=GetTransactionReviewByTransactionId failed to get review")
+		c.Error(err).SetType(gin.ErrorTypePublic).SetMeta(http.StatusInternalServerError)
+		return
+	}
+	c.JSON(http.StatusOK, gin.H{
+		"status": http.StatusOK,
+		"data": *reviews,
+	})
+}
+
+
+
 func CreateVideoMeeting(c *gin.Context){
 	type setting struct {
 		Use_pmi string `json:"use_pmi"`
@@ -265,9 +287,10 @@ func CreateVideoMeeting(c *gin.Context){
 	type zoomCreateRoom struct {
 		Topic string  `json:"topic"`
 		Type string `json:"type"`
-		Start_time string `json:"start_time"`
+		StartTime string `json:"start_time"`
 		Timezone string `json:"timezone"`
-		Settings setting
+		Settings setting `json:"settings"`
+		TransactionId int64 `json:"transactionId`
 	}
 
 	zoomCreateRoomStruct := zoomCreateRoom{}
@@ -301,16 +324,28 @@ func CreateVideoMeeting(c *gin.Context){
 			"status": http.StatusInternalServerError,
 			"data": "failed to create zoom room",
 		})
+		return
 	}
 
 	body, _ := ioutil.ReadAll(resp.Body)
-	videoMeeting := models.VideoMeeting{}
-	err = json.Unmarshal(body, &videoMeeting)
+	type videoMeetingUrl struct {
+		Url string `json:"join_url"`
+	}
+	Url := videoMeetingUrl{}
+	err = json.Unmarshal(body, &Url)
 	if err != nil {
 		log.Println("action=CreateVideoMeeting failed to unmarshal videMeeting")
 		c.Error(err).SetType(gin.ErrorTypePublic).SetMeta(http.StatusBadRequest)
 		return
 	}
+
+	videoMeeting := models.VideoMeeting{
+		Name:zoomCreateRoomStruct.Topic,
+		Url:Url.Url,
+		StartedAt: zoomCreateRoomStruct.StartTime,
+		TransactionID: zoomCreateRoomStruct.TransactionId,
+	}
+
 	videoMeetingRepository := repository.VideoMeetingRepository{}
 	err = videoMeetingRepository.Create(&videoMeeting)
 	if err != nil {
@@ -363,18 +398,38 @@ func DeleteVideoMeeting(c *gin.Context){
 		"data": "",
 	})
 }
-func GetTransactionVideoMeeting(c *gin.Context){
+func GetVideoMeetingByUserId(c *gin.Context){
 	tokenService := service.TokenService{}
 	user, err := tokenService.Verify(c)
 	if err != nil {
-		log.Println("action=GetTransactionVideoMeeting user_id is not found")
+		log.Println("action=GetVideoMeetingByUserId user_id is not found")
 		c.Error(err).SetType(gin.ErrorTypePublic).SetMeta(http.StatusBadRequest)
 		return
 	}
 	videoMeetingRepository := repository.VideoMeetingRepository{}
 	videoMeetings, err := videoMeetingRepository.GetByUserId(user.UserId)
 	if err != nil {
-		log.Println("action=GetTransactionVideoMeeting failed to get videoMeetings")
+		log.Println("action=GetVideoMeetingByUserId failed to get videoMeetings")
+		c.Error(err).SetType(gin.ErrorTypePublic).SetMeta(http.StatusInternalServerError)
+		return
+	}
+	c.JSON(http.StatusOK, gin.H{
+		"status": http.StatusOK,
+		"data": *videoMeetings,
+	})
+}
+
+func GetVideoMeetingByTransactionId(c *gin.Context){
+	paramTransactionId, err := strconv.ParseInt(c.Param("transactionId"), 10, 64)
+	if err != nil {
+		log.Println("action=GetVideoMeetingByTransactionId user_id is not found")
+		c.Error(err).SetType(gin.ErrorTypePublic).SetMeta(http.StatusBadRequest)
+		return
+	}
+	videoMeetingRepository := repository.VideoMeetingRepository{}
+	videoMeetings, err := videoMeetingRepository.GetByTransactionId(paramTransactionId)
+	if err != nil {
+		log.Println("action=GetVideoMeetingByTransactionId failed to get videoMeetings")
 		c.Error(err).SetType(gin.ErrorTypePublic).SetMeta(http.StatusInternalServerError)
 		return
 	}
@@ -407,14 +462,14 @@ func TransactionRouter(group *gin.RouterGroup) {
 			reviewEngine.POST("/create", CreateReview)
 			reviewEngine.PUT("/:reviewId/update", UpdateReview)
 			reviewEngine.DELETE("/:reviewId/delete", DeleteReview)
-			reviewEngine.GET("/", GetTransactionReview)
+			reviewEngine.GET("/:transactionId", GetTransactionReviewByTransactionId)
 		}
 		videoMeetingEngine := myPageEngine.Group("/videomeeting")
 		{
 			videoMeetingEngine.POST("/create", CreateVideoMeeting)
 			videoMeetingEngine.PUT("/:videoMeetingId/update", UpdateVideoMeeting)
 			videoMeetingEngine.DELETE("/:videoMeetingId/delete", DeleteVideoMeeting)
-			videoMeetingEngine.GET("/", GetTransactionVideoMeeting)
+			videoMeetingEngine.GET("/:transactionId", GetVideoMeetingByTransactionId)
 		}
 	}
 }

@@ -19,6 +19,7 @@ const (
 type Transaction struct {
 	gorm.Model
 	BizpackID     int64          `json:"bizpackId"`
+	Bizpack       Bizpack
 	Status        status         `json:"status"`
 	VideoMeetings []VideoMeeting `json:"videoMeetings" gorm:"save_associations:false"`
 	//Payments      []Payment      `json:"payments" gorm:"save_associations:false"`

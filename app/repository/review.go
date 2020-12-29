@@ -44,3 +44,14 @@ func (ReviewRepository) GetByUserId(userId int64) (*[]models.Review, error) {
 	}
 	return &reviews, nil
 }
+
+func (ReviewRepository) GetByTransactionId(transactionId int64) (*[]models.Review, error) {
+	db := DBCon()
+	defer db.Close()
+	reviews := []models.Review{}
+
+	if err := db.Set("gorm:auto_preload", true).Where("transaction_id = ?", transactionId).Find(&reviews).Error; err != nil {
+		return nil, err
+	}
+	return &reviews, nil
+}
