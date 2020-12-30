@@ -37,6 +37,7 @@ func Router(){
 		mypage.BizPackRouter(APIEngine)
 		mypage.PortfolioRouter(APIEngine)
 		transaction.TransactionRouter(APIEngine)
+		mypage.IssueRouter(APIEngine)
 		admin.Router(APIEngine)
 	}
 
