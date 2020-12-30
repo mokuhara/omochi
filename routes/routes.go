@@ -8,6 +8,7 @@ import (
 	"omochi/app/controller/admin"
 	"omochi/app/controller/auth"
 	"omochi/app/controller/mypage"
+	"omochi/app/controller/mypage/transaction"
 	"omochi/app/controller/specialist"
 	"omochi/app/controller/user"
 	"omochi/config"
@@ -20,7 +21,7 @@ func Router(){
 
 	engine.Use(cors.New(cors.Config{
 		AllowOrigins:     []string{"http://localhost:3000"}, // MEMO: 本番はOriginが異なるので環境変数で対応する？
-		AllowMethods:     []string{"GET", "POST", "PUT", "PATCH", "OPTIONS"},
+		AllowMethods:     []string{"GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"},
 		AllowHeaders:     []string{"Origin", "Authorization, Content-Type"},
 		ExposeHeaders:    []string{"Content-Length"},
 		AllowCredentials: true,
@@ -35,6 +36,7 @@ func Router(){
 		mypage.ProfileRouter(APIEngine)
 		mypage.BizPackRouter(APIEngine)
 		mypage.PortfolioRouter(APIEngine)
+		transaction.TransactionRouter(APIEngine)
 		admin.Router(APIEngine)
 	}
 
