@@ -2,7 +2,6 @@ package models
 
 import (
 	"github.com/jinzhu/gorm"
-	"time"
 )
 
 type Issue struct {
@@ -17,8 +16,8 @@ type Issue struct {
 	CategoryID int64 `json:"categoryId"`
 	Budget int64 `json:"budget"`
 	RecruitmentCapacity int64 `json:"recruitmentCapacity"`
-	StartAt time.Time `json:"startAt"`
-	EndAt time.Time `json:"endAt"`
-	ApplicationDeadline time.Time `json:"applicationDeadline"`
+	StartAt string `json:"startAt"`
+	EndAt string `json:"endAt"`
+	ApplicationDeadline string `json:"applicationDeadline"`
 	UserID int64 `json:"userId"`
 }
