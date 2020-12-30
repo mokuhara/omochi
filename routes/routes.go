@@ -8,6 +8,7 @@ import (
 	"omochi/app/controller/admin"
 	"omochi/app/controller/auth"
 	"omochi/app/controller/mypage"
+	"omochi/app/controller/mypage/transaction"
 	"omochi/app/controller/specialist"
 	"omochi/app/controller/user"
 	"omochi/config"
@@ -35,7 +36,7 @@ func Router(){
 		mypage.ProfileRouter(APIEngine)
 		mypage.BizPackRouter(APIEngine)
 		mypage.PortfolioRouter(APIEngine)
-		mypage.TransactionRouter(APIEngine)
+		transaction.TransactionRouter(APIEngine)
 		admin.Router(APIEngine)
 	}
 
