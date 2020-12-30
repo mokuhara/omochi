@@ -3,3 +3,4 @@ vendor/*
 config.ini
 logfile.log
 omochi.db
+.idea/*
