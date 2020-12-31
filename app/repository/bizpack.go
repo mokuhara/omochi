@@ -1,6 +1,7 @@
 package repository
 
 import "omochi/app/models"
+import "log"
 
 type BizpackRepository struct {}
 
@@ -38,16 +39,20 @@ func (BizpackRepository) Delete(bizpackId int64) error {
 func (BizpackRepository) GetAll() (*[]models.Bizpack, error) {
 	db := DBCon()
 	defer db.Close()
+
 	var bizpacks []models.Bizpack
+
 	if err := db.Set("gorm:auto_preload", true).Find(&bizpacks).Error; err != nil {
 		return nil, err
 	}
+
 	return &bizpacks, nil
 }
 
 func (BizpackRepository) Find(bizpackId int64) (*models.Bizpack, error){
 	db := DBCon()
 	defer db.Close()
+
 	bizpack := models.Bizpack{}
 
 	if err := db.Set("gorm:auto_preload", true).Where("id = ?", bizpackId).First(&bizpack).Error; err != nil {
@@ -59,11 +64,14 @@ func (BizpackRepository) Find(bizpackId int64) (*models.Bizpack, error){
 func (BizpackRepository) GetByUserId(userId int64) (*[]models.Bizpack, error){
 	db := DBCon()
 	defer db.Close()
+
 	bizpacks:= []models.Bizpack{}
 
+	log.Println(userId)
 	if err := db.Set("gorm:auto_preload", true).Where("user_id = ?", userId).Find(&bizpacks).Error; err != nil {
 		return nil, err
 	}
+
 	return &bizpacks, nil
 }
 
