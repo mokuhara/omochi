@@ -49,31 +49,6 @@ func Index(c *gin.Context) {
 	})
 }
 
-func Show(c *gin.Context) {
-	bizpackId, err := strconv.ParseInt(c.Param("bizpackId"), 10, 64)
-
-	if err != nil {
-		log.Println("action=DeleteBizpack user_id is not found")
-		c.Error(err).SetType(gin.ErrorTypePublic).SetMeta(http.StatusBadRequest)
-
-		return
-	}
-
-	bizpacks, err := bizpackRepository.GetByBizpackId(bizpackId)
-
-	if err != nil {
-		log.Println("action=GetUserBizpacks failed to get bizpacks")
-		c.Error(err).SetType(gin.ErrorTypePublic).SetMeta(http.StatusInternalServerError)
-
-		return
-	}
-
-	c.JSON(http.StatusOK, gin.H{
-		"status": http.StatusOK,
-		"data": *bizpacks,
-	})
-}
-
 func Create(c *gin.Context) {
 	user, err := authenticate(c)
 
@@ -111,18 +86,78 @@ func Create(c *gin.Context) {
 	})
 }
 
-func Update(c *gin.Context) {
-	bizpack := models.Bizpack{}
-	err := c.BindJSON(&bizpack)
+func Show(c *gin.Context) {
+	user, err := authenticate(c)
 
 	if err != nil {
-		log.Println("action=UpdateBizpack bind error")
+		log.Println("action=Show user_id is not found")
 		c.Error(err).SetType(gin.ErrorTypePublic).SetMeta(http.StatusBadRequest)
 
 		return
 	}
 
-	err = bizpackRepository.Update(&bizpack)
+	bizpackId, err := strconv.ParseInt(c.Param("bizpackId"), 10, 64)
+
+	if err != nil {
+		log.Println("action=ShowBizpack bizpackId is not found")
+		c.Error(err).SetType(gin.ErrorTypePublic).SetMeta(http.StatusBadRequest)
+
+		return
+	}
+
+	bizpack, err := bizpackRepository.GetByUserIDAndBizpackId(user.UserId, bizpackId)
+
+	if err != nil {
+		log.Println("action=GetByUserIDAndBizpackId failed to get bizpack")
+		c.Error(err).SetType(gin.ErrorTypePublic).SetMeta(http.StatusInternalServerError)
+
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{
+		"status": http.StatusOK,
+		"data": *bizpack,
+	})
+}
+
+func Update(c *gin.Context) {
+	user, err := authenticate(c)
+
+	if err != nil {
+		log.Println("action=Update user_id is not found")
+		c.Error(err).SetType(gin.ErrorTypePublic).SetMeta(http.StatusBadRequest)
+
+		return
+	}
+
+	bizpackId, err := strconv.ParseInt(c.Param("bizpackId"), 10, 64)
+
+	if err != nil {
+		log.Println("action=Update bizpackId is not found")
+		c.Error(err).SetType(gin.ErrorTypePublic).SetMeta(http.StatusBadRequest)
+
+		return
+	}
+
+	bizpack, err := bizpackRepository.GetByUserIDAndBizpackId(user.UserId, bizpackId)
+
+	if err != nil {
+		log.Println("action=GetByUserIDAndBizpackId failed to get bizpack")
+		c.Error(err).SetType(gin.ErrorTypePublic).SetMeta(http.StatusInternalServerError)
+
+		return
+	}
+
+	bindErr := c.BindJSON(bizpack)
+
+	if bindErr != nil {
+		log.Println("action=UpdateBizpack bind error")
+		c.Error(bindErr).SetType(gin.ErrorTypePublic).SetMeta(http.StatusBadRequest)
+
+		return
+	}
+
+	err = bizpackRepository.Update(bizpack)
 
 	if err != nil {
 		log.Println("action=UpdateBizpack failed to update bizpack")

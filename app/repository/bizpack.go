@@ -83,3 +83,14 @@ func (BizpackRepository) GetByBizpackId(bizpackId int64) (*models.Bizpack, error
 	}
 	return &bizpack, nil
 }
+
+// TODO: 要リファクタ
+func (BizpackRepository) GetByUserIDAndBizpackId(userId int64, bizpackId int64) (*models.Bizpack, error) {
+	bizpack := models.Bizpack{}
+
+	if err := DB.Set("gorm:auto_preload", true).Where("id = ? AND user_id = ?", bizpackId, userId).First(&bizpack).Error; err != nil {
+		return nil, err
+	}
+
+	return &bizpack, nil
+}
