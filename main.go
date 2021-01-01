@@ -9,6 +9,6 @@ import (
 
 func main(){
 	utils.LoggingSettings(config.Config.LogFile)
-	repository.DBCon()
 	routes.Router()
+	repository.DBClose()
 }

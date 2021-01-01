@@ -5,41 +5,33 @@ import "omochi/app/models"
 type ProfileRepository struct {}
 
 func (ProfileRepository) Create(profile *models.Profile) error {
-	db := DBCon()
-	defer db.Close()
-	if err := db.Create(&profile).Error; err != nil {
+	if err := DB.Create(&profile).Error; err != nil {
 		return err
 	}
 	return nil
 }
 
 func (ProfileRepository) Get(userId int64) (*models.Profile, error) {
-	db := DBCon()
-	defer db.Close()
 	profile := models.Profile{}
-	if err := db.Order("id desc").Where("user_id = ?",userId).First(&profile).Error; err != nil{
+	if err := DB.Order("id desc").Where("user_id = ?",userId).First(&profile).Error; err != nil{
 		return nil, err
 	}
 	return &profile, nil
 }
 
 func (ProfileRepository) Update(editProfile *models.Profile) error {
-	db := DBCon()
-	defer db.Close()
-	if err := db.Model(&models.Profile{}).Updates(editProfile).Error; err != nil {
+	if err := DB.Model(&models.Profile{}).Updates(editProfile).Error; err != nil {
 		return err
 	}
 	return nil
 }
 
 func (ProfileRepository) Delete(id int64) error {
-	db := DBCon()
-	defer db.Close()
 	profile := models.Profile{}
-	if err := db.Order("id desc").Where("id = ?", id).First(&profile).Error; err != nil{
+	if err := DB.Order("id desc").Where("id = ?", id).First(&profile).Error; err != nil{
 		return err
 	}
-	db.Delete(&profile)
+	DB.Delete(&profile)
 	return nil
 }
 
@@ -52,9 +44,7 @@ type Profile struct {
 }
 
 func (ProfileRepository) GetAll() ([]Profile, error){
-	db := DBCon()
-	defer DBCon()
-	rows, err := db.Raw("SELECT * FROM (SELECT *, rank() over(partition by user_id order by id desc) AS rank FROM profiles) AS a WHERE rank = 1").Rows()
+	rows, err := DB.Raw("SELECT * FROM (SELECT *, rank() over(partition by user_id order by id desc) AS rank FROM profiles) AS a WHERE rank = 1").Rows()
 	if err != nil {
 		return nil, err
 	}
@@ -63,7 +53,7 @@ func (ProfileRepository) GetAll() ([]Profile, error){
 	for rows.Next() {
 
 		profile := Profile{}
-		db.ScanRows(rows, &profile)
+		DB.ScanRows(rows, &profile)
 		arr = append(arr, profile)
 	}
 	return arr, nil

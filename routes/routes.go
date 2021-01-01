@@ -22,7 +22,7 @@ func Router(){
 	engine.Use(cors.New(cors.Config{
 		AllowOrigins:     []string{"http://localhost:3000"}, // MEMO: 本番はOriginが異なるので環境変数で対応する？
 		AllowMethods:     []string{"GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"},
-		AllowHeaders:     []string{"Origin", "Authorization, Content-Type"},
+		AllowHeaders:     []string{"Origin", "Authorization", "Content-Type"},
 		ExposeHeaders:    []string{"Content-Length"},
 		AllowCredentials: true,
 	}))
