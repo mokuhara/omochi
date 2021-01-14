@@ -1,0 +1,13 @@
+version: "3"
+
+services:
+  db:
+    build: ./docker/mysql/
+    volumes:
+      - ./docker/mysql/db:/docker-entrypoint-initdb.d  #初期データをマウントする場所
+    image: omochi_db
+    ports:
+      - 3306:3306
+    environment:
+      - MYSQL_ROOT_PASSWORD=password # mysqlのパスワード
+      - MYSQL_DATABASE=omochi # イメージ作成時のDB名

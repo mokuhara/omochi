@@ -2,16 +2,16 @@ package repository
 
 import (
 	"github.com/jinzhu/gorm"
-	_ "github.com/jinzhu/gorm/dialects/sqlite"
+	_ "github.com/jinzhu/gorm/dialects/mysql"
 	"log"
-	_"omochi/app/models"
+	// _"omochi/app/models"
 	"omochi/config"
 )
 
 var DB = DBCon()
 
 func DBCon() *gorm.DB{
-	DB, err := gorm.Open(config.Config.SQLDriver, config.Config.DbName)
+	db, err := gorm.Open("mysql", config.Config.DbDSN)
 
 	if err != nil {
 		log.Fatalln(err)
@@ -22,7 +22,7 @@ func DBCon() *gorm.DB{
 	//db.AutoMigrate(&models.Bizpack{}, &models.Party{}, &models.Product{}, &models.Category{})
 	//db.AutoMigrate(&models.Payment{}, &models.Transaction{}, &models.VideoMeeting{}, models.Review{})
 	//db.AutoMigrate(&models.Issue{})
-	return DB
+	return db
 }
 
 func DBClose() {
