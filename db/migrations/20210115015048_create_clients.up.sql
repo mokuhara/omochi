@@ -2,8 +2,8 @@ CREATE TABLE IF NOT EXISTS clients (
   id BIGINT UNSIGNED auto_increment PRIMARY KEY,
   user_id BIGINT UNSIGNED NOT NULL,
   company_id BIGINT UNSIGNED NOT NULL,
-  CREATED_AT DATETIME NOT NULL,
-  UPDATED_AT DATETIME NOT NULL,
+  created_at DATETIME NOT NULL,
+  updated_at DATETIME NOT NULL,
   CONSTRAINT fk_clients_on_user_id
     FOREIGN KEY (user_id)
     REFERENCES users(id)
