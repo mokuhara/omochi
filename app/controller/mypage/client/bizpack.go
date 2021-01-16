@@ -24,15 +24,15 @@ func authenticate(c *gin.Context) (auth *service.Auth, err error) {
 
 func Index(c *gin.Context) {
 	user, err := authenticate(c)
-
+	println(user)
 	if err != nil {
 		log.Println("action=DeleteBizpack user_id is not found")
 		c.Error(err).SetType(gin.ErrorTypePublic).SetMeta(http.StatusBadRequest)
 
 		return
 	}
-
-	bizpacks, err := bizpackRepository.GetByUserId(user.UserId)
+	//TODO transaction化していないbizpackのみ取得するよう変更
+	bizpacks, err := bizpackRepository.GetAll()
 
 	if err != nil {
 		log.Println("action=GetUserBizpacks failed to get bizpacks")
