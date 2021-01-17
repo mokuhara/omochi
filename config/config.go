@@ -1,32 +1,52 @@
 package config
 
 import (
-	"gopkg.in/ini.v1"
+	"github.com/joho/godotenv"
+	"fmt"
 	"log"
 	"os"
 )
 
-type ConfigList struct  {
+type ConfigList struct {
 	DbName string
-	SQLDriver string
+	DbDSN string
 
-	Port int
+	Port string
+	Origins []string
 	LogFile string
+
+	ZoomEndpoint string
+	ZoomJwt string
 }
 
 var Config ConfigList
 
 func init(){
-	cfg, err := ini.Load("config.ini")
+	// load .env file
+	err := godotenv.Load()
+
 	if err != nil {
-		log.Printf("Failed to read file: #{err}")
+		log.Printf("Failed to loading .env file")
 		os.Exit(1)
 	}
 
+	// gormでDBに接続するための情報
+	dsn := fmt.Sprintf(
+		"%s:%s@tcp(%s:%s)/%s?charset=utf8mb4&parseTime=True&loc=Local",
+		os.Getenv("DB_USER"),
+		os.Getenv("DB_PASS"),
+		os.Getenv("DB_HOST"),
+		os.Getenv("DB_PORT"),
+		os.Getenv("DB_NAME"),
+	)
+
 	Config = ConfigList{
-		DbName: cfg.Section("db").Key("name").String(),
-		SQLDriver: cfg.Section("db").Key("driver").String(),
-		Port: cfg.Section("web").Key("port").MustInt(),
-		LogFile: cfg.Section("web").Key("log_file").String(),
+		DbName: os.Getenv("DB_NAME"),
+		DbDSN: dsn,
+		Port: os.Getenv("PORT"),
+		LogFile: os.Getenv("LOG_FILE"),
+		Origins: []string{ os.Getenv("WEB_ORIGIN") },
+		ZoomEndpoint: os.Getenv("ZOOM_ENDPOINT"),
+		ZoomJwt: os.Getenv("ZOOM_JWT"),
 	}
 }
