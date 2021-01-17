@@ -1,0 +1,4 @@
+CREATE TABLE IF NOT EXISTS categories (
+  id BIGINT UNSIGNED auto_increment PRIMARY KEY,
+  type INT NOT NULL
+);
