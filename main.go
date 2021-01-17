@@ -2,13 +2,13 @@ package main
 
 import (
 	"omochi/app/repository"
-	"omochi/config"
 	"omochi/routes"
-	"omochi/utils"
+	// "omochi/config"
+	// "omochi/utils"
 )
 
 func main(){
-	utils.LoggingSettings(config.Config.LogFile)
+	// utils.LoggingSettings(config.Config.LogFile)
 	routes.Router()
 	repository.DBClose()
 }
