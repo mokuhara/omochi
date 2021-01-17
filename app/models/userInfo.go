@@ -15,7 +15,7 @@ type UserInfo struct {
 	User User
 	UserID int64 `json:"userId"`
 	Name string `json:"name"`
-	kana string `json:"kana"`
+	Kana string `json:"kana"`
 	Phone string `json:"phone"`
 	CompanyName string `json:"companyName"`
 	Department string `json:"department"`
