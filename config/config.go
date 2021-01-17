@@ -23,7 +23,7 @@ var Config ConfigList
 
 func init() {
 
-	if os.Getenv("GO_ENV") == "production" {
+	if os.Getenv("GO_ENV") != "production" {
 		// load .env file
 		err := godotenv.Load()
 
