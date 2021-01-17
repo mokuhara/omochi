@@ -4,6 +4,7 @@ CREATE TABLE IF NOT EXISTS clients (
   company_id BIGINT UNSIGNED NOT NULL,
   created_at DATETIME NOT NULL,
   updated_at DATETIME NOT NULL,
+  deleted_at DATETIME,
   CONSTRAINT fk_clients_on_user_id
     FOREIGN KEY (user_id)
     REFERENCES users(id)

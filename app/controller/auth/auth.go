@@ -19,6 +19,7 @@ func Signup(c *gin.Context){
 		c.Error(err).SetType(gin.ErrorTypePublic).SetMeta(http.StatusBadRequest)
 		return
 	}
+
 	purePassword := user.Password
 	hash, err := bcrypt.GenerateFromPassword([]byte(user.Password), 10)
 	if err != nil {

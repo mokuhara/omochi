@@ -11,6 +11,7 @@ CREATE TABLE IF NOT EXISTS portfolios (
   is_public BOOLEAN NOT NULL DEFAULT 0,
   created_at DATETIME NOT NULL,
   updated_at DATETIME NOT NULL,
+  deleted_at DATETIME,
   CONSTRAINT fk_portfolios_on_user_id
     FOREIGN KEY (user_id)
     REFERENCES users(id)

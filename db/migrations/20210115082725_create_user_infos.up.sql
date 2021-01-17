@@ -13,6 +13,7 @@ CREATE TABLE IF NOT EXISTS user_infos (
   consent BOOLEAN NOT NULL,
   created_at DATETIME NOT NULL,
   updated_at DATETIME NOT NULL,
+  deleted_at DATETIME,
   CONSTRAINT fk_user_infos_on_user_id
     FOREIGN KEY (user_id)
     REFERENCES users(id)

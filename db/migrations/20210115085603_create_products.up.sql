@@ -3,6 +3,9 @@ CREATE TABLE IF NOT EXISTS products (
   name VARCHAR(255) NOT NULL,
   bizpack_id BIGINT UNSIGNED NOT NULL,
   portfolio_id BIGINT UNSIGNED NOT NULL,
+  created_at DATETIME NOT NULL,
+  updated_at DATETIME NOT NULL,
+  deleted_at DATETIME,
   CONSTRAINT fk_products_on_bizpack_id
     FOREIGN KEY (bizpack_id)
     REFERENCES bizpacks(id)

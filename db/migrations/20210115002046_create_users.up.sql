@@ -4,5 +4,6 @@ CREATE TABLE IF NOT EXISTS users (
   password text NOT NULL,
   type INTEGER UNSIGNED,
   created_at DATETIME NOT NULL,
-  updated_at DATETIME NOT NULL
+  updated_at DATETIME NOT NULL,
+  deleted_at DATETIME
 );
