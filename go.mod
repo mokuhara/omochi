@@ -1,7 +1,7 @@
 module omochi
 
 // +heroku goVersion 1.14
-// +heroku install -tags 'postgres' ./vendor/github.com/golang-migrate/migrate/v4/cmd/migrate .
+// +heroku install -tags 'mysql' ./vendor/github.com/golang-migrate/migrate/v4/cmd/migrate
 
 go 1.13
 
