@@ -10,21 +10,48 @@ import (
 	"strconv"
 )
 
+func authenticate(c *gin.Context) (auth *service.Auth, err error) {
+	tokenService := service.TokenService{}
+	user, err := tokenService.Verify(c)
+
+	if err != nil {
+		return nil, err
+	}
+
+	return user, nil
+}
+
+// 一旦client側からの作成のみを許容
 func CreateTransaction(c *gin.Context) {
+	user, authErr := authenticate(c)
+
+	if authErr != nil {
+		log.Println("action=DeleteBizpack user_id is not found")
+		c.Error(authErr).SetType(gin.ErrorTypePublic).SetMeta(http.StatusBadRequest)
+
+		return
+	}
+
 	transaction := models.Transaction{}
 	err := c.BindJSON(&transaction)
+
 	if err != nil {
 		log.Println("action=CreateTransaction bind error")
 		c.Error(err).SetType(gin.ErrorTypePublic).SetMeta(http.StatusBadRequest)
 		return
 	}
+
+	transaction.ClientUserID = user.UserId
+
 	transactionRepository := repository.TransactionRepository{}
 	err = transactionRepository.Create(&transaction)
+
 	if err != nil {
 		log.Println("action=CreateTransaction failed to create transaction")
 		c.Error(err).SetType(gin.ErrorTypePublic).SetMeta(http.StatusInternalServerError)
 		return
 	}
+
 	c.JSON(http.StatusOK, gin.H{
 		"status": http.StatusOK,
 		"data": "",
