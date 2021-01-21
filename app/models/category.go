@@ -11,6 +11,5 @@ const (
 )
 
 type Category struct {
-	gorm.Model
 	Type categoryType `json:"type"`
 }
