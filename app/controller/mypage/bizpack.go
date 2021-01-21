@@ -64,7 +64,7 @@ func Create(c *gin.Context) {
 
 	if bindErr != nil {
 		log.Println("action=CreateBizpack bind error")
-		c.Error(err).SetType(gin.ErrorTypePublic).SetMeta(http.StatusBadRequest)
+		c.Error(bindErr).SetType(gin.ErrorTypePublic).SetMeta(http.StatusBadRequest)
 
 		return
 	}
