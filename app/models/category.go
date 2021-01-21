@@ -1,6 +1,6 @@
 package models
 
-import "github.com/jinzhu/gorm"
+import _ "github.com/jinzhu/gorm"
 
 type categoryType int
 
