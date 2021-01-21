@@ -21,27 +21,30 @@ type ConfigList struct {
 
 var Config ConfigList
 
-func init(){
-	// load .env file
-	err := godotenv.Load()
+func init() {
 
-	if err != nil {
-		log.Printf("Failed to loading .env file")
-		os.Exit(1)
+	if os.Getenv("GO_ENV") != "production" {
+		// load .env file
+		err := godotenv.Load()
+
+		if err != nil {
+			log.Printf("Failed to loading .env file")
+			os.Exit(1)
+		}
 	}
 
 	// gormでDBに接続するための情報
 	dsn := fmt.Sprintf(
-		"%s:%s@tcp(%s:%s)/%s?charset=utf8mb4&parseTime=True&loc=Local",
+		"%s:%s@tcp(%s:%s)/%s?%s",
 		os.Getenv("DB_USER"),
 		os.Getenv("DB_PASS"),
 		os.Getenv("DB_HOST"),
 		os.Getenv("DB_PORT"),
 		os.Getenv("DB_NAME"),
+		os.Getenv("DB_QUERY"),
 	)
 
 	Config = ConfigList{
-		DbName: os.Getenv("DB_NAME"),
 		DbDSN: dsn,
 		Port: os.Getenv("PORT"),
 		LogFile: os.Getenv("LOG_FILE"),
