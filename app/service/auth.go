@@ -25,7 +25,7 @@ const (
 	userType = "type"
 	iatKey =    "iat"
 	expKey =    "exp"
-	lifetime =  30 * time.Minute
+	lifetime =  300 * time.Minute
 )
 
 

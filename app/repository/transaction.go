@@ -38,8 +38,7 @@ func (TransactionRepository) GetByUserId(userId int64) (*[]models.Transaction, e
 	db := DBCon()
 	defer db.Close()
 	transactions := []models.Transaction{}
-
-	if err := db.Set("gorm:auto_preload", true).Find(&transactions).Error; err != nil {
+	if err := db.Set("gorm:auto_preload", true).Where("specialist_user_id = ?", userId).Or("client_user_id = ?", userId).Find(&transactions).Error; err != nil {
 		return nil, err
 	}
 	return &transactions, nil
